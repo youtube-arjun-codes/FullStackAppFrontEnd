@@ -29,16 +29,21 @@ export default function Student() {
       body:JSON.stringify(student)
 
   }).then(()=>{
-    console.log("New Student added")
+    console.log("New Student added");
+    refreshAllStudents();
   })
 }
+  
+const refreshAllStudents = () => {
+  fetch('http://localhost:8080/student/getAll')
+    .then((res) => res.json())
+    .then((result) => {
+      setStudents(result);
+    });
+};
 
 useEffect(()=>{
-  fetch("http://localhost:8080/student/getAll")
-  .then(res=>res.json())
-  .then((result)=>{
-    setStudents(result);
-  }
+  refreshAllStudents();
 )
 },[])
   return (
